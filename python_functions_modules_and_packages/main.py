@@ -4,7 +4,8 @@ import module_2 as m2
 from module_1 import my_info # we can import specific variable for function as well
 
 # import module3 as m3 # This wont help as its inside the mypackage folder so it wil throw import error
-from mypackages import module3, module4 
+# from mypackages import module3, module4 
+from mypackages import *
 
 
 # print(module_1.get_sum(5, 9))
