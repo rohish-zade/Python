@@ -5,18 +5,14 @@ except for 1 and itself. For example, 2, 3, 5, 7, 11, and 13 are prime numbers b
 cannot be divided by any other positive integer except for 1 and their own value.
 """
 
-num = int(input("Enter a number: "))
-
-if num <= 1:
-    print(f"{num} is not a prime number")
-    exit()
-
-for i in range(2, num+1):
+def is_prime(num):
+    if num <= 1:
+        return False
+    for i in range(2, num):
+        if num % i == 0:
+            return False
     
+    return True
 
-
-"""
-When the system comes across the quit() function, it exits the Python program by closing the Python file itself. 
-The quit() command also requires the site.py module to be imported. 
-The SystemExit exception is raised by the quit() command in the background.
-"""
+num = int(input("Enter the number:"))
+print(is_prime(num))
