@@ -1,5 +1,5 @@
 import os
-cwd = os.getcwd()
 
-print(cwd)
+file = 'orders_1.csv'
+print(file.split(".")[0])
 
