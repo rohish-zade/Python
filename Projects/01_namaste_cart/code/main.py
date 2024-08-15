@@ -14,7 +14,7 @@ try:
     subject = f"Validation email for {email_date}"
 
     print("print_1:", incoming_files_path)
-    # Getting the list of source files from incoming folder for today"s date
+    # Getting the list of source files from incoming folder for todays date
     incoming_files = os.listdir(incoming_files_path)
     
     print("print_2:", incoming_files)
@@ -34,6 +34,7 @@ try:
 
         # loop through list of files to validate each file 
         for file in incoming_files:
+            print(f"Start Processing For: {file}")
             flag = True  # flag to chec if files validation passed or failed 
             header = False  # flag to check if files has header or not while writing to a error file
             
@@ -73,7 +74,7 @@ try:
                             rejected_reason = rejected_reason + pid_reject_reason + ";"
                         
                         if len(val_empty) > 0:
-                            for col in val_city:
+                            for col in val_empty:
                                 empty_reject_reason = empty_reject_reason + col + ";"
                             empty_reject_reason = "Columns " + empty_reject_reason.strip(",") + " are empty."
                             rejected_reason = rejected_reason + empty_reject_reason + ";"
@@ -90,9 +91,11 @@ try:
                             sales_reject_reason = f"Invalid Sales Calculation"
                             rejected_reason = rejected_reason + sales_reject_reason
                         
-                        if val_product_id and val_order_date and val_city and len(val_empty) ==0 and val_sales:
+                        if val_product_id and val_order_date and val_city and len(val_empty) == 0 and val_sales:
                             continue
                         else:
+                            print(f"in error block processing file :{file}")
+                            print(f"Reject reason: {rejected_reason}")
                             row_str = ""
                             flag = False
                             if not os.path.exists(f"{rejected_files_path}"):
@@ -101,7 +104,7 @@ try:
                             rejected_cnt += 1
                             with open(f"{rejected_files_path}/error_{file}", "a") as f:
                                 for key in order_dict.keys():
-                                    row_str = row_str + order_dict["key"] + ","
+                                    row_str = row_str + order_dict[key] + ","
                                 row_str = row_str + rejected_reason
                                 row_str = row_str.strip(',')
                                 if not header:
@@ -113,7 +116,7 @@ try:
                                 f.close()
                     else:
                         if flag:
-                            print("print_3: in success file write block", )
+                            print("print_4: in success file write block", )
                             if not os.path.exists(f"{success_files_path}"):
                                 os.makedirs(f"{success_files_path}", exist_ok=True)
                             shutil.copy(f"{incoming_files_path}/{file}", f"{success_files_path}/{file}")
@@ -135,7 +138,7 @@ try:
             Successful Files: {success_cnt} \n
             Rejected Files: {rejected_cnt}
             """
-            print(ms.sendmail(subject, body))
+            print(body)
             # ms.sendmail(subject, body)
     else:
         print("No file present in source folder.")

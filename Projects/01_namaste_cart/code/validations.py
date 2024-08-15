@@ -10,17 +10,19 @@ def read_master_date():
     return product_list
 
 
-def get_product_price(product_id):
-    product_price = 0
-    with open("../master_data/product_master.csv", "r") as f:
+def get_product_dict():
+    product_dict = {}
+    with open('../master_data/product_master.csv') as f:
         products = f.readlines()[1:]
-        for proudct in products:
-            product_list = proudct.split(",")
-            if product_id in product_list:
-                product_price = product_list[2]
-                break
-    return product_price
+        for product in products:
+            product_dict[product.split(',')[0]] = product.split(',')[2]
+        return product_dict
 
+
+def validate_sales(order):
+    product_dict = get_product_dict()
+    if order['product_id'] in product_dict.keys():
+        return int(product_dict[order['product_id']]) * int(order['quantity']) == int(order['sales'])
 
 
 def validate_product_id(order_id, products):
@@ -50,18 +52,3 @@ def validate_emptiness(orders):
         if not orders[k] or orders[k] == '':
             empty_cols.append(k)
     return empty_cols
-
-
-def validate_sales(orders):
-    order_quatity = int(orders["quatity"])
-    order_sales = int(orders["sales"])
-    product_price = int(get_product_price(orders["product_id"]))
-    return (order_quatity * product_price) == order_sales
-
-
-# with open("../master_data/product_master.csv", "r") as f:
-#         print("hello")
-#         products = f.readlines()[1:]
-#         print(products)
-#         for product in products:
-#            print(product.split(","))
