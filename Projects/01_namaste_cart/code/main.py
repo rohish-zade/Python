@@ -13,11 +13,8 @@ try:
     email_date = datetime.date.today().strftime("%Y-%m-%d")
     subject = f"Validation email for {email_date}"
 
-    print("print_1:", incoming_files_path)
     # Getting the list of source files from incoming folder for todays date
     incoming_files = os.listdir(incoming_files_path)
-    
-    print("print_2:", incoming_files)
 
     # Directory paths for success and rejected files
     success_files_path = f"../success_files/{today_date}"
@@ -28,13 +25,12 @@ try:
 
     # If total_cnt > 0 then start validation else no need to validate files
     if total_cnt > 0:
-        print("print_3:", "in total_cnt condition: " + str(total_cnt))
         success_cnt = 0
         rejected_cnt = 0
 
         # loop through list of files to validate each file 
         for file in incoming_files:
-            print(f"Start Processing For: {file}")
+            print(f"Start Processing : {file}")
             flag = True  # flag to chec if files validation passed or failed 
             header = False  # flag to check if files has header or not while writing to a error file
             
@@ -61,7 +57,7 @@ try:
                         order_dict["product_id"] = data_row[2]
                         order_dict["quantity"] = data_row[3]
                         order_dict["sales"] = data_row[4]
-                        order_dict["city"] = data_row[5]
+                        order_dict["city"] = data_row[5].strip()
 
                         val_product_id = v.validate_product_id(order_dict["product_id"], products)
                         val_order_date = v.validate_order_date(order_dict["order_date"])
@@ -116,7 +112,6 @@ try:
                                 f.close()
                     else:
                         if flag:
-                            print("print_4: in success file write block", )
                             if not os.path.exists(f"{success_files_path}"):
                                 os.makedirs(f"{success_files_path}", exist_ok=True)
                             shutil.copy(f"{incoming_files_path}/{file}", f"{success_files_path}/{file}")
@@ -138,11 +133,11 @@ try:
             Successful Files: {success_cnt} \n
             Rejected Files: {rejected_cnt}
             """
-            print(body)
-            # ms.sendmail(subject, body)
+            # print(body)
+            ms.sendmail(subject, body)
     else:
-        print("No file present in source folder.")
-        # ms.sendmail(subject, "No file present in source folder.")
+        # print("No file present in source folder.")
+        ms.sendmail(subject, "No file present in source folder.")
 
 except Exception as e:
     print(str(e))
