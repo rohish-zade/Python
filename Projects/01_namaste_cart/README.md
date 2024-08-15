@@ -1,4 +1,4 @@
-PROJECT STATEMENT:
+Project Statement:
 
 imagine there is a online mart called namasteMart operating in Bangalore and Mumbai. Everday all the transactions/orders files are generated and sent to you for validation.
 you need to verify all the files and notify business in case of any issues.
