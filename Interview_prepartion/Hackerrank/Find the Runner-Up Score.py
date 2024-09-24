@@ -16,3 +16,4 @@ if __name__ == '__main__':
     # print the second maximum which is the runner up score
     print(arr_unique[1])
     
+    
