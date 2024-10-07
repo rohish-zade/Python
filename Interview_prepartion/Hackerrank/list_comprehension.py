@@ -20,6 +20,7 @@ if __name__ == '__main__':
     # for k in range(z+1): #1
     #     for j in range(y+1): #1,
     #         for i in range(x+1):
-    #         resutl_for.append([i, j, k]) # 0,0, 1,0, 0,1, 1,1
+    #             if (i + j + k) != n:
+    #                 resutl_for.append([i, j, k]) # 0,0, 1,0, 0,1, 1,1
             
     # print(resutl_for)
