@@ -1,4 +1,5 @@
 # https://www.hackerrank.com/challenges/nested-list/problem?isFullScreen=true
+
 if __name__ == '__main__':
     # Create an empty list to store student data.
     students = []
